@@ -1,21 +1,21 @@
+import env
 import discord
 import random
-import os
 import requests
-import asyncio
-
-_TOKEN = "OTQ4NTk0NDk2ODE4NTMyNDQy.Yh-FeA.N6ArtnL9iycW83BV8nzSo_fviEw"
-_CHANNEL_ID = "830168850452185131"
 
 client = discord.Client()
 
 greet_words = ["!hi", "!hoi", "!hello", "!hey", "!hola", "!wassup"]
-greet_messages =   ["We're happy to have you here!", "Glad to see you!", 
-                    "Happy to have you!", "Enjoy the journey with us!", 
-                    "May you shine here!", "You added a shine to the server!",
-                    "Welcome to the family!", "You look great today! Just like the server."
+greet_messages =   ["We're happy to have you here!",
+                    "Glad to see you!", 
+                    "Happy to have you!",
+                    "Enjoy the journey with us!", 
+                    "May you shine here!",
+                    "You added a shine to the server!",
+                    "Welcome to the family!",
+                    "You look great today! Just like the server.",
                     "Are you a diamond? The server shines brighter now!",
-                    "Are you an answer? We were always looking for you!"]
+                    "Are you an answer? We were looking for you!"]
 
 @client.event
 async def on_ready():
@@ -57,4 +57,4 @@ async def on_member_leave(member):
                             description = "Until we meet again...", 
                             color = discord.Color.dark_red()  )
 
-client.run(_TOKEN)
+client.run(TOKEN)
