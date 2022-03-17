@@ -3,7 +3,9 @@ import discord
 import random
 import requests
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.members = True
+client = discord.Client(intents=intents)
 
 greet_words = ["!hi", "!hoi", "!hello", "!hey", "!hola", "!wassup"]
 greet_messages =   ["We're happy to have you here!",
@@ -46,15 +48,21 @@ async def on_message(message):
 @client.event
 async def on_member_join(member):
     print("DEBUG: A member called " + member.name + " joined.")
-    embed = discord.Embed(  title = "Welcome " + member.name+"!",
-                            description = random.choice(greet_messages), 
-                            color = discord.Color.dark_teal()  )
+    channel = client.get_channel(int(env.CHANNEL_ID))
+    embedVar = discord.Embed(title = f"Welcome to {member.guild.name}, {member.name} !",
+                             description = random.choice(greet_messages), 
+                             color = discord.Color.dark_teal()   )
+    embedVar.set_thumbnail(url = member.avatar_url)
+    await channel.send(embed=embedVar)
 
 @client.event
-async def on_member_leave(member):
-    print("DEBUG: A member called " + member.name + " left.")
-    embed = discord.Embed(  title = "Goodbye " + member.name + ":'(",
-                            description = "Until we meet again...", 
-                            color = discord.Color.dark_red()  )
+async def on_member_remove(member):
+    print(f"DEBUG: A member called {member.name} left.")
+    channel = client.get_channel(int(env.CHANNEL_ID))
+    embedVar = discord.Embed(title = f"Goodbye {member.name} :\'(",
+                             description = "Until we meet again...", 
+                             color = discord.Color.dark_red()  )
+    embedVar.set_thumbnail(url = member.avatar_url)
+    await channel.send(embed=embedVar)
 
-client.run(TOKEN)
+client.run(env.TOKEN)
